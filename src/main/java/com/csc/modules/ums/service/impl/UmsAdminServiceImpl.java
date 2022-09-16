@@ -132,7 +132,6 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdmin> i
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         loginLog.setIp(request.getRemoteAddr());
-        System.out.println("log->{}" + admin.getId() + loginLog.getAdminId());
         loginLogMapper.insert(loginLog);
     }
 

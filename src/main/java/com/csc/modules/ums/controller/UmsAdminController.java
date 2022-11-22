@@ -11,8 +11,11 @@ import com.csc.modules.ums.model.UmsAdmin;
 import com.csc.modules.ums.model.UmsRole;
 import com.csc.modules.ums.service.UmsAdminService;
 import com.csc.modules.ums.service.UmsRoleService;
+import com.csc.modules.ums.service.impl.UmsAdminServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -34,6 +37,7 @@ import java.util.stream.Collectors;
 @Api(tags = "UmsAdminController", description = "后台用户管理")
 @RequestMapping("/admin")
 public class UmsAdminController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UmsAdminController.class);
     @Value("${jwt.tokenHeader}")
     private String tokenHeader;
     @Value("${jwt.tokenHead}")
@@ -58,6 +62,7 @@ public class UmsAdminController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult login(@Validated @RequestBody UmsAdminLoginParam umsAdminLoginParam) {
+        LOGGER.info(umsAdminLoginParam.getPassword() + "--" + umsAdminLoginParam.getUsername());
         String token = adminService.login(umsAdminLoginParam.getUsername(), umsAdminLoginParam.getPassword());
         if (token == null) {
             return CommonResult.validateFailed("用户名或密码错误");
